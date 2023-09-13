@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @GetMapping("{id}")
-    public ResponseEntity<Product> getById(@PathVariable String id) {
+    public ResponseEntity<Product> getProductById(@PathVariable String id) {
 
         Product prod = new Product();
         prod.setId(id);

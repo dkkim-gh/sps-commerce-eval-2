@@ -19,7 +19,7 @@ import java.util.List;
 public class SubscriptionController {
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subscription> getById(@PathVariable String id) {
+    public ResponseEntity<Subscription> getSubscriptionById(@PathVariable String id) {
 
         Subscription sub = new Subscription();
         sub.setId(id);
@@ -53,8 +53,14 @@ public class SubscriptionController {
         loc.setState("IL");
         loc.setZipCode("12345");
         org.setLocation(loc);
+
+
+
+
         sub.setOrganization(org);
 
         return new ResponseEntity<>(sub, HttpStatus.OK);
     }
+
+
 }
