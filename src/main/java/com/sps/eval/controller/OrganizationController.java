@@ -1,6 +1,7 @@
 package com.sps.eval.controller;
 
 
+import com.sps.eval.model.Location;
 import com.sps.eval.model.Organization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,14 @@ public class OrganizationController {
         Organization org = new Organization();
         org.setId(id);
         org.setName("Hard-coded Organization");
+
+        Location loc = new Location();
+        loc.setAddress("123 Main Street");
+        loc.setCity("Chicago");
+        loc.setState("IL");
+        loc.setZipCode("12345");
+
+        org.setLocation(loc);
 
         return new ResponseEntity<>(org, HttpStatus.OK);
     }
