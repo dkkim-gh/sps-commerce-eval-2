@@ -13,7 +13,11 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Optional<Product> findByProductId(String id) {
+    public Optional<Product> findProductById(String id) {
         return productRepository.findById(id);
+    }
+
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 }

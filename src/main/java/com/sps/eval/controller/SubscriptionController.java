@@ -36,8 +36,8 @@ public class SubscriptionController {
 
     @PostMapping
     public ResponseEntity<Subscription> save(@RequestBody Subscription subscription) {
-        Subscription savedSubscription = subscriptionService.save(subscription);
-        return new ResponseEntity<>(savedSubscription, HttpStatus.OK);
+        subscriptionService.save(subscription);
+        return new ResponseEntity<>(subscription, HttpStatus.OK);
     }
 
     /*

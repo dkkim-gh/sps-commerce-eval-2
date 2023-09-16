@@ -5,10 +5,7 @@ import com.sps.eval.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -22,14 +19,19 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable String id) {
 
-        Optional<Product> optionalProduct = productService.findByProductId(id);
+        Optional<Product> optionalProduct = productService.findProductById(id);
 
         if(optionalProduct.isPresent()) {
             return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
 
+    @PostMapping
+    public ResponseEntity<Product> save(@RequestBody Product product) {
+        productService.save(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     /*

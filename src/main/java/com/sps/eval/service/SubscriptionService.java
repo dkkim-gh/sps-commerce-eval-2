@@ -19,8 +19,8 @@ public class SubscriptionService {
 
 
     public Subscription save(Subscription subscription) {
-        Subscription savedSubscription = subscriptionRepository.save(subscription);
-        return savedSubscription;
+        subscriptionRepository.save(subscription);
+        return subscription;
     }
 
 }

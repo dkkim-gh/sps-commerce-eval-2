@@ -14,14 +14,13 @@ import java.util.UUID;
     @Autowired
     OrganizationRepository organizationRepository;
 
-    public Optional<Organization> getByPrimaryKey(String id) {
-
+    public Optional<Organization> findOrganizationById(String id) {
         return organizationRepository.findById(id);
     }
 
     public Organization save(Organization organization) {
-        Organization savedOrganization = organizationRepository.save(organization);
-        return savedOrganization;
+        organizationRepository.save(organization);
+        return organization;
     }
 
 }

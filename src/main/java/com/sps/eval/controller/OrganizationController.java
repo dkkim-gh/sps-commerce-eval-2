@@ -32,7 +32,7 @@ public class OrganizationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Organization> getOrganizationById(@PathVariable String id) {
-        Optional<Organization> optionalOrganization = organizationService.getByPrimaryKey(id);
+        Optional<Organization> optionalOrganization = organizationService.findOrganizationById(id);
 
         if(optionalOrganization.isPresent()) {
             return new ResponseEntity<>(optionalOrganization.get(), HttpStatus.OK);
@@ -126,9 +126,14 @@ public class OrganizationController {
     ) @org.springframework.web.bind.annotation.RequestBody Organization organization) {
 
 
+        /*
         Organization savedOrganization = organizationService.save(organization);
 
         return new ResponseEntity<>(savedOrganization, HttpStatus.OK);
+         */
+
+        organizationService.save(organization);
+        return new ResponseEntity<>(organization, HttpStatus.OK);
 
 
     }
