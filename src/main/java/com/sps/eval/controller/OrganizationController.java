@@ -5,9 +5,12 @@ import com.sps.eval.model.Location;
 import com.sps.eval.model.Organization;
 import com.sps.eval.model.Product;
 import com.sps.eval.model.Subscription;
+import com.sps.eval.service.OrganizationService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.aspectj.weaver.ast.Or;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;
@@ -17,14 +20,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/organization")
 public class OrganizationController {
 
+    @Autowired
+    OrganizationService organizationService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Organization> getOrganizationById(@PathVariable String id) {
+        Optional<Organization> optionalOrganization = organizationService.getByPrimaryKey(id);
+
+        if(optionalOrganization.isPresent()) {
+            return new ResponseEntity<>(optionalOrganization.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @GetMapping("/hardcoded/{id}")
+    public ResponseEntity<Organization> getOrganizationById_hardCoded(@PathVariable String id) {
 
         Organization org = new Organization();
         org.setId(id);

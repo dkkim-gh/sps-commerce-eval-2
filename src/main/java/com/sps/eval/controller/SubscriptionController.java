@@ -4,6 +4,8 @@ import com.sps.eval.model.Location;
 import com.sps.eval.model.Organization;
 import com.sps.eval.model.Product;
 import com.sps.eval.model.Subscription;
+import com.sps.eval.service.SubscriptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +15,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/subscription")
 public class SubscriptionController {
 
+    @Autowired
+    SubscriptionService subscriptionService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Subscription> getSubscriptionById(@PathVariable String id) {
+
+        Optional<Subscription> subscriptionOptional = subscriptionService.findSubscriptionById(id);
+
+        if(subscriptionOptional.isPresent()) {
+            return new ResponseEntity<>(subscriptionOptional.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
+    @GetMapping("/hardcoded/{id}")
+    public ResponseEntity<Subscription> getSubscriptionById_hardcoded(@PathVariable String id) {
 
         Subscription sub = new Subscription();
         sub.setId(id);
