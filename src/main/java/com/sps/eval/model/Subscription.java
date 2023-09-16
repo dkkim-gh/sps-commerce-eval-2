@@ -18,7 +18,7 @@ public class Subscription {
 
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.MERGE)
     @JoinColumn(name="organization_id", nullable=false)
     private Organization organization;
 

@@ -17,4 +17,10 @@ public class SubscriptionService {
         return subscriptionRepository.findById(id);
     }
 
+
+    public Subscription save(Subscription subscription) {
+        Subscription savedSubscription = subscriptionRepository.save(subscription);
+        return savedSubscription;
+    }
+
 }
