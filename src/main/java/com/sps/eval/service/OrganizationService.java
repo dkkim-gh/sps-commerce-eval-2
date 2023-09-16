@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service public class OrganizationService {
 
@@ -14,6 +15,7 @@ import java.util.Optional;
     OrganizationRepository organizationRepository;
 
     public Optional<Organization> getByPrimaryKey(String id) {
+
         return organizationRepository.findById(id);
     }
 

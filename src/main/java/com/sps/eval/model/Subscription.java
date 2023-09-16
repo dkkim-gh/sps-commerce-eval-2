@@ -3,9 +3,9 @@ package com.sps.eval.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -13,8 +13,8 @@ public class Subscription {
 
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private UUID id;
+    @UuidGenerator
+    private String id;
 
 
     @JsonBackReference
