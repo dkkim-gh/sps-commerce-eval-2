@@ -1,8 +1,12 @@
 package com.sps.eval.controller;
 
+import com.sps.eval.model.Organization;
 import com.sps.eval.model.Product;
 import com.sps.eval.service.ProductService;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,23 +33,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody Product product) {
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    /*
-    @GetMapping("/hardcoded/{id}")
-    public ResponseEntity<Product> getProductById_hardCoded(@PathVariable String id) {
-
-        Product prod = new Product();
-        prod.setId(id);
-        prod.setName("Product Name");
-        prod.setDescription("Product Description");
-
-        return new ResponseEntity<>(prod, HttpStatus.OK);
+    @GetMapping(value = "/all")
+    @PageableAsQueryParam
+    public ResponseEntity<Page<Organization>> findAllLocations(Pageable pageable) {
+        Page<Product> page = productService.findAll(pageable);
+        return new ResponseEntity(page, HttpStatus.OK);
     }
 
-     */
 
 }
