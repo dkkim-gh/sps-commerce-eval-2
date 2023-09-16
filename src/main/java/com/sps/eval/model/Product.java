@@ -13,18 +13,22 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private String id;
+    private UUID id;
 
     @Column(unique = true)
     private String name;
     private String description;
-    @ManyToMany
+
+    /*
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name="product_subproduct",
             joinColumns = @JoinColumn( name="product_id"),
             inverseJoinColumns = @JoinColumn( name="subproduct_id")
     )
     private List<Product> subproducts;
+    */
+
     private double price;
 
 

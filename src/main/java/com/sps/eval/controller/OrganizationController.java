@@ -41,6 +41,7 @@ public class OrganizationController {
 
     }
 
+    /*
     @GetMapping("/hardcoded/{id}")
     public ResponseEntity<Organization> getOrganizationById_hardCoded(@PathVariable String id) {
 
@@ -100,6 +101,8 @@ public class OrganizationController {
         return new ResponseEntity<>(org, HttpStatus.OK);
     }
 
+     */
+
 
 
     @PostMapping
@@ -122,8 +125,11 @@ public class OrganizationController {
     ) @org.springframework.web.bind.annotation.RequestBody Organization organization) {
 
 
+        Organization savedOrganization = organizationService.save(organization);
 
-        return new ResponseEntity<>(organization, HttpStatus.OK);
+        return new ResponseEntity<>(savedOrganization, HttpStatus.OK);
+
+
     }
 
 

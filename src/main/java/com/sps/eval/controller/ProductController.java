@@ -31,6 +31,8 @@ public class ProductController {
         }
 
     }
+
+    /*
     @GetMapping("/hardcoded/{id}")
     public ResponseEntity<Product> getProductById_hardCoded(@PathVariable String id) {
 
@@ -41,5 +43,7 @@ public class ProductController {
 
         return new ResponseEntity<>(prod, HttpStatus.OK);
     }
+
+     */
 
 }

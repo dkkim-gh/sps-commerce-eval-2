@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -13,18 +14,17 @@ public class Subscription {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private String id;
+    private UUID id;
 
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="organization_id", nullable=false)
     private Organization organization;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Product> products;
     private double discount;
-    //private double totalPrice;
 
     @Transient
     public double getTotalPrice() {

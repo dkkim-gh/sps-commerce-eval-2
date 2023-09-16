@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity(name = "organization")
@@ -15,15 +16,15 @@ public class Organization {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private String id;
+    private UUID id;
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="location_id", nullable=true)
     private Location location;
 
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization", cascade=CascadeType.ALL)
     private List<Subscription> subscriptions;
 
 }

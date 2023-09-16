@@ -38,6 +38,7 @@ public class SubscriptionController {
 
     }
 
+    /*
     @GetMapping("/hardcoded/{id}")
     public ResponseEntity<Subscription> getSubscriptionById_hardcoded(@PathVariable String id) {
 
@@ -81,6 +82,8 @@ public class SubscriptionController {
 
         return new ResponseEntity<>(sub, HttpStatus.OK);
     }
+
+     */
 
 
 }
