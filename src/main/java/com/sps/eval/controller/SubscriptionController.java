@@ -1,5 +1,6 @@
 package com.sps.eval.controller;
 
+import com.sps.eval.message.ResponseMessage;
 import com.sps.eval.model.Organization;
 import com.sps.eval.model.Subscription;
 import com.sps.eval.service.SubscriptionService;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -46,6 +49,14 @@ public class SubscriptionController {
     public ResponseEntity<Page<Subscription>> findAllLocations(@ParameterObject Pageable pageable) {
         Page<Subscription> page = subscriptionService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/upload")
+    public ResponseEntity<ResponseMessage> uploadSubscriptionCsvFile(@RequestParam("file") MultipartFile file) {
+        List<Subscription> uploadedSubscriptions = subscriptionService.importSubscriptionCsvFile(file);
+        ResponseMessage responseMessage = new ResponseMessage("Processed " + uploadedSubscriptions.size() + " subscriptions.");
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
 }
