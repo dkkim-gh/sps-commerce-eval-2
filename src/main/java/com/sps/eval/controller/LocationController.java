@@ -4,9 +4,11 @@ import com.sps.eval.model.Location;
 import com.sps.eval.service.LocationService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +50,7 @@ public class LocationController {
 
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Location>> findAllLocations(Pageable pageable) {
+    public ResponseEntity<Page<Location>> findAllLocations(@ParameterObject Pageable pageable) {
         Page<Location> page = locationService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }

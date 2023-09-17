@@ -3,6 +3,7 @@ package com.sps.eval.controller;
 import com.sps.eval.model.Organization;
 import com.sps.eval.model.Subscription;
 import com.sps.eval.service.SubscriptionService;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,7 +43,7 @@ public class SubscriptionController {
 
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Subscription>> findAllLocations(Pageable pageable) {
+    public ResponseEntity<Page<Subscription>> findAllLocations(@ParameterObject Pageable pageable) {
         Page<Subscription> page = subscriptionService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }

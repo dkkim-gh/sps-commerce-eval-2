@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.aspectj.weaver.ast.Or;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -76,7 +77,7 @@ public class OrganizationController {
 
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Organization>> findAllLocations(Pageable pageable) {
+    public ResponseEntity<Page<Organization>> findAllLocations(@ParameterObject Pageable pageable) {
         Page<Organization> page = organizationService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }
