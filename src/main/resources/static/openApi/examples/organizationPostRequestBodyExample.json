@@ -1,9 +1,9 @@
 {
-"name": "Hard-coded Organization"
+  "name": "Org 1",
   "location": {
-    "address": "123 Main Street",
-    "city": "Chicago",
-    "state": "IL",
-    "zipCode": "12345"
+    "address": "address1",
+    "city": "city1",
+    "state": "state1",
+    "zipCode": "zipcode1"
   }
 }

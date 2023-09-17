@@ -58,12 +58,74 @@ public class OrganizationController {
 
     }
 
+
+    @Operation(summary = "Save an Organization. Not including an ID will create a new Organization, including an ID will update")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Organization saved/updated",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Organization.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content) })
     @PostMapping
     public ResponseEntity<Organization> saveOrganization(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
             @ExampleObject(
-                    name = "Organization Example",
-                    summary = "Organization Example",
-                    externalValue = "http://localhost:8080/openApi/examples/organizationPostRequestBodyExample.json"
+                    name = "Organization Example 1",
+                    summary = "Organization with no Subscriptions",
+                    value = "{\n" +
+                            "  \"name\": \"Org 1\",\n" +
+                            "  \"location\": {\n" +
+                            "    \"address\": \"address1\",\n" +
+                            "    \"city\": \"city1\",\n" +
+                            "    \"state\": \"state1\",\n" +
+                            "    \"zipCode\": \"zipcode1\"\n" +
+                            "  }\n" +
+                            "}"
+            ),
+            @ExampleObject(
+                    name = "Organization Example 2",
+                    summary = "Organization with a Subscription (Product names must be unique)",
+                    value = "{\n" +
+                            "    \"name\": \"Org 1\",\n" +
+                            "    \"location\": {\n" +
+                            "        \"address\": \"address1\",\n" +
+                            "        \"city\": \"city1\",\n" +
+                            "        \"state\": \"state1\",\n" +
+                            "        \"zipCode\": \"zipcode1\"\n" +
+                            "    },\n" +
+                            "    \"subscriptions\": [\n" +
+                            "        {\n" +
+                            "            \"products\": [\n" +
+                            "                {\n" +
+                            "                    \"name\": \"product 11\",\n" +
+                            "                    \"description\": \"product 1\",\n" +
+                            "                    \"subproducts\": [],\n" +
+                            "                    \"price\": 10.0\n" +
+                            "                },\n" +
+                            "                {\n" +
+                            "                    \"name\": \"product 22\",\n" +
+                            "                    \"description\": \"product 2\",\n" +
+                            "                    \"subproducts\": [],\n" +
+                            "                    \"price\": 15.0\n" +
+                            "                },\n" +
+                            "                {\n" +
+                            "                    \"name\": \"product 33\",\n" +
+                            "                    \"description\": \"product 3\",\n" +
+                            "                    \"subproducts\": [],\n" +
+                            "                    \"price\": 19.99\n" +
+                            "                },\n" +
+                            "                {\n" +
+                            "                    \"name\": \"product 44\",\n" +
+                            "                    \"description\": \"product 4\",\n" +
+                            "                    \"subproducts\": [],\n" +
+                            "                    \"price\": 34.99\n" +
+                            "                }\n" +
+                            "            ],\n" +
+                            "            \"discount\": 10.0\n" +
+                            "        }\n" +
+                            "    ]\n" +
+                            "}"
             )
     })
 
@@ -75,6 +137,15 @@ public class OrganizationController {
 
 
 
+    @Operation(summary = "Get all Organizations (example of pagination and sorting)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returns all Organizations",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Organization.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
     public ResponseEntity<Page<Organization>> findAllLocations(@ParameterObject Pageable pageable) {
