@@ -2,13 +2,16 @@ package com.sps.eval.controller;
 
 import com.sps.eval.model.Location;
 import com.sps.eval.service.LocationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,15 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
+    @Operation(summary = "Get a Location by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return a Location by ID",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Location.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Location not found",
+                    content = @Content) })
     @GetMapping(value = "/{id}")
     public ResponseEntity<Location> findLocationById(@PathVariable String id) {
 
@@ -34,12 +46,27 @@ public class LocationController {
         }
     }
 
+
+    @Operation(summary = "Save an Location. Not including an ID will create a new Location, including an ID will update.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Location saved/updated",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Location.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content) })
     @PostMapping
     public ResponseEntity<Location> saveLocation(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
             @ExampleObject(
                     name = "Organization Example",
                     summary = "Organization Example",
-                    externalValue = "http://localhost:8080/openApi/examples/locationPostRequestBodyExample.json"
+                    value = "{\n" +
+                            "    \"address\": \"address1\",\n" +
+                            "    \"city\": \"city1\",\n" +
+                            "    \"state\": \"state1\",\n" +
+                            "    \"zipCode\": \"zipcode1\"\n" +
+                            "}"
             )
     })
 
@@ -48,6 +75,16 @@ public class LocationController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "Get all Locations")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all Locations",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Location.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
     public ResponseEntity<Page<Location>> findAllLocations(@ParameterObject Pageable pageable) {

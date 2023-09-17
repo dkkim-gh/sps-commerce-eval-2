@@ -1,10 +1,7 @@
 package com.sps.eval.controller;
 
 
-import com.sps.eval.model.Location;
 import com.sps.eval.model.Organization;
-import com.sps.eval.model.Product;
-import com.sps.eval.model.Subscription;
 import com.sps.eval.service.OrganizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.aspectj.weaver.ast.Or;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-
-//import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/organization")
@@ -39,7 +29,7 @@ public class OrganizationController {
 
     @Operation(summary = "Get an Organization by its ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the book",
+            @ApiResponse(responseCode = "200", description = "Found the Organization",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Organization.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
@@ -59,7 +49,7 @@ public class OrganizationController {
     }
 
 
-    @Operation(summary = "Save an Organization. Not including an ID will create a new Organization, including an ID will update")
+    @Operation(summary = "Save an Organization. Not including an ID will create a new Organization, including an ID will update.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Organization saved/updated",
                     content = { @Content(mediaType = "application/json",
@@ -148,7 +138,7 @@ public class OrganizationController {
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Organization>> findAllLocations(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<Organization>> findAllOrganizations(@ParameterObject Pageable pageable) {
         Page<Organization> page = organizationService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }
