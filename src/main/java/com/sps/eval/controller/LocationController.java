@@ -2,6 +2,7 @@ package com.sps.eval.controller;
 
 import com.sps.eval.model.Location;
 import com.sps.eval.service.LocationService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -26,6 +27,7 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get a Location by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return a Location by ID",

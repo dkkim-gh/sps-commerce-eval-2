@@ -3,6 +3,7 @@ package com.sps.eval.controller;
 
 import com.sps.eval.model.Organization;
 import com.sps.eval.service.OrganizationService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -27,6 +28,7 @@ public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get an Organization by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the Organization",
