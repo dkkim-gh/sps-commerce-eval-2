@@ -68,18 +68,32 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> saveProduct(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
             @ExampleObject(
-                    name = "Product Example 1 (TODO)",
-                    summary = "Product Example (TODO)",
+                    name = "Product Example 1",
+                    summary = "Product Example",
                     value = "{\n" +
-                            "  \"name\": \"Org 1\",\n" +
-                            "  \"location\": {\n" +
-                            "    \"address\": \"address1\",\n" +
-                            "    \"city\": \"city1\",\n" +
-                            "    \"state\": \"state1\",\n" +
-                            "    \"zipCode\": \"zipcode1\"\n" +
-                            "  }\n" +
+                            "    \"name\": \"Product from Swagger Name\",\n" +
+                            "    \"description\": \"Product from Swagger Description\",\n" +
+                            "    \"subproducts\": [],\n" +
+                            "    \"price\": 10.0\n" +
                             "}"
-            )
+            ),
+            @ExampleObject(
+                    name = "Product Example 2",
+                    summary = "Product Example with a Subproduct",
+                    value = "{\n" +
+                            "    \"name\": \"product 1\",\n" +
+                            "    \"description\": \"product 1\",\n" +
+                            "    \"subproducts\": [\n" +
+                            "        {\n" +
+                            "            \"name\": \"subproduct 1\",\n" +
+                            "            \"description\": \"subproduct 1\",\n" +
+                            "            \"subproducts\": [],\n" +
+                            "            \"price\": 25.0\n" +
+                            "        }\n" +
+                            "    ],\n" +
+                            "    \"price\": 10.0\n" +
+                            "}"
+            ),
     })
 
     ) @org.springframework.web.bind.annotation.RequestBody Product product,

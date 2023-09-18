@@ -75,16 +75,47 @@ public class SubscriptionController {
     @PostMapping
     public ResponseEntity<Subscription> saveSubscription(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
             @ExampleObject(
-                    name = "Subscription Example 1 (TODO)",
-                    summary = "Subscription Example (TODO)",
+                    name = "Subscription Example 1",
+                    summary = "This payload assumes an Organization and Location with the following IDs were created beforehand",
                     value = "{\n" +
-                            "  \"name\": \"Org 1\",\n" +
-                            "  \"location\": {\n" +
-                            "    \"address\": \"address1\",\n" +
-                            "    \"city\": \"city1\",\n" +
-                            "    \"state\": \"state1\",\n" +
-                            "    \"zipCode\": \"zipcode1\"\n" +
-                            "  }\n" +
+                            "    \"products\": [\n" +
+                            "        {\n" +
+                            "            \"name\": \"product 111\",\n" +
+                            "            \"description\": \"product 1\",\n" +
+                            "            \"subproducts\": [],\n" +
+                            "            \"price\": 10.0\n" +
+                            "        },\n" +
+                            "        {\n" +
+                            "            \"name\": \"product 222\",\n" +
+                            "            \"description\": \"product 2\",\n" +
+                            "            \"subproducts\": [],\n" +
+                            "            \"price\": 15.0\n" +
+                            "        },\n" +
+                            "        {\n" +
+                            "            \"name\": \"product 333\",\n" +
+                            "            \"description\": \"product 3\",\n" +
+                            "            \"subproducts\": [],\n" +
+                            "            \"price\": 19.99\n" +
+                            "        },\n" +
+                            "        {\n" +
+                            "            \"name\": \"product 444\",\n" +
+                            "            \"description\": \"product 4\",\n" +
+                            "            \"subproducts\": [],\n" +
+                            "            \"price\": 34.99\n" +
+                            "        }\n" +
+                            "    ],\n" +
+                            "    \"discount\": \"50.0\",\n" +
+                            "    \"organization\": {\n" +
+                            "        \"id\": \"3d769504-34cd-4ac1-b78e-6ec55a9686e3\",\n" +
+                            "        \"name\": \"Org 1\",\n" +
+                            "        \"location\": {\n" +
+                            "            \"id\": \"79fb176f-3a2e-4252-835b-8759c5a33025\",\n" +
+                            "            \"address\": \"address1\",\n" +
+                            "            \"city\": \"city1\",\n" +
+                            "            \"state\": \"state1\",\n" +
+                            "            \"zipCode\": \"zipcode1\"\n" +
+                            "        }\n" +
+                            "    }\n" +
                             "}"
             )
     })
