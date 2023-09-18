@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
-    @RateLimiter(name = "basic")
+    //@RateLimiter(name = "basic")
     @Operation(summary = "Get a Location by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return a Location by ID",
@@ -38,7 +39,8 @@ public class LocationController {
             @ApiResponse(responseCode = "404", description = "Location not found",
                     content = @Content) })
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Location> findLocationById(@PathVariable String id) {
+    public ResponseEntity<Location> findLocationById(@PathVariable String id,
+                                                     @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
 
         Optional<Location> optionalLocation = locationService.findLocationById(id);
         if(optionalLocation.isPresent()) {
@@ -58,6 +60,7 @@ public class LocationController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
                     content = @Content) })
+    @SecurityRequirements()
     @PostMapping
     public ResponseEntity<Location> saveLocation(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
             @ExampleObject(
@@ -72,7 +75,9 @@ public class LocationController {
             )
     })
 
-    ) @org.springframework.web.bind.annotation.RequestBody Location location) {
+    ) @org.springframework.web.bind.annotation.RequestBody Location location,
+                                                 @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
+
         locationService.save(location);
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
@@ -89,7 +94,9 @@ public class LocationController {
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Location>> findAllLocations(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<Location>> findAllLocations(@ParameterObject Pageable pageable,
+                                                           @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
+
         Page<Location> page = locationService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }

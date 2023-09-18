@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ public class SubscriptionController {
     SubscriptionService subscriptionService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subscription> getSubscriptionById(@PathVariable String id) {
+    public ResponseEntity<Subscription> getSubscriptionById(@PathVariable String id,
+                                                            @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
 
         Optional<Subscription> subscriptionOptional = subscriptionService.findSubscriptionById(id);
 
@@ -53,6 +55,7 @@ public class SubscriptionController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
                     content = @Content) })
+    @SecurityRequirements()
     @PostMapping
     public ResponseEntity<Subscription> saveSubscription(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
             @ExampleObject(
@@ -70,7 +73,8 @@ public class SubscriptionController {
             )
     })
 
-    ) @org.springframework.web.bind.annotation.RequestBody  Subscription subscription) {
+    ) @org.springframework.web.bind.annotation.RequestBody Subscription subscription,
+                                                         @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
         subscriptionService.save(subscription);
         return new ResponseEntity<>(subscription, HttpStatus.OK);
     }
@@ -88,14 +92,17 @@ public class SubscriptionController {
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Subscription>> findAllSubscriptions(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<Subscription>> findAllSubscriptions(@ParameterObject Pageable pageable,
+                                                                   @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
         Page<Subscription> page = subscriptionService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }
 
 
     @PostMapping(value = "/upload")
-    public ResponseEntity<ResponseMessage> uploadSubscriptionCsvFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<ResponseMessage> uploadSubscriptionCsvFile(@RequestParam("file") MultipartFile file,
+                                                                     @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
+
         List<Subscription> uploadedSubscriptions = subscriptionService.importSubscriptionCsvFile(file);
         ResponseMessage responseMessage = new ResponseMessage("Processed " + uploadedSubscriptions.size() + " subscriptions.");
         return new ResponseEntity(responseMessage, HttpStatus.OK);

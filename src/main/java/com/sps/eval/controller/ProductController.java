@@ -37,7 +37,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Organization not found",
                     content = @Content) })
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+    public ResponseEntity<Product> getProductById(@PathVariable String id,
+                                                  @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
 
         Optional<Product> optionalProduct = productService.findProductById(id);
 
@@ -74,7 +75,8 @@ public class ProductController {
             )
     })
 
-    ) @org.springframework.web.bind.annotation.RequestBody Product product) {
+    ) @org.springframework.web.bind.annotation.RequestBody Product product,
+                                               @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -90,7 +92,8 @@ public class ProductController {
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Product>> findAllProducts(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<Product>> findAllProducts(@ParameterObject Pageable pageable,
+                                                         @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
         Page<Product> page = productService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }

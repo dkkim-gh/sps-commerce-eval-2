@@ -28,7 +28,7 @@ public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
 
-    @RateLimiter(name = "basic")
+    //@RateLimiter(name = "basic")
     @Operation(summary = "Get an Organization by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the Organization",
@@ -39,7 +39,9 @@ public class OrganizationController {
             @ApiResponse(responseCode = "404", description = "Organization not found",
                     content = @Content) })
     @GetMapping("/{id}")
-    public ResponseEntity<Organization> getOrganizationById(@PathVariable String id) {
+    public ResponseEntity<Organization> getOrganizationById(@PathVariable String id,
+                                                            @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
+
         Optional<Organization> optionalOrganization = organizationService.findOrganizationById(id);
 
         if(optionalOrganization.isPresent()) {
@@ -121,7 +123,8 @@ public class OrganizationController {
             )
     })
 
-    ) @org.springframework.web.bind.annotation.RequestBody Organization organization) {
+    ) @org.springframework.web.bind.annotation.RequestBody Organization organization,
+                                                         @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
 
         organizationService.save(organization);
         return new ResponseEntity<>(organization, HttpStatus.OK);
@@ -140,7 +143,8 @@ public class OrganizationController {
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
-    public ResponseEntity<Page<Organization>> findAllOrganizations(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<Organization>> findAllOrganizations(@ParameterObject Pageable pageable,
+                                                                   @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
         Page<Organization> page = organizationService.findAll(pageable);
         return new ResponseEntity(page, HttpStatus.OK);
     }
