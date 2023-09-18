@@ -21,45 +21,26 @@ import java.util.Collection;
 @Component
 public class ApiKeyAuthFilter extends OncePerRequestFilter {
 
-    @Value("${api.key}")
-    private String apiKey;
-    @Value("${api.secret}")
-    private String apiSecret;
+    @Value("${api.key.name}")
+    private String apiKeyName;
+
+    @Value("${api.key.value}")
+    private String apiKeyValue;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
         // Get the API key and secret from request headers
-        String requestApiKey = request.getHeader("X-API-KEY");
-        //String requestApiSecret = request.getHeader("X-API-SECRET");
-        // Validate the key and secret
+        String requestApiKey = request.getHeader(apiKeyName);
 
-        //if (apiKey.equals(requestApiKey) && apiSecret.equals(requestApiSecret)) {
-        if(apiKey.equals(requestApiKey)) {
-            // Continue processing the request
-            //filterChain.doFilter(request, response);
-
+        if(apiKeyValue.equals(requestApiKey)) {
             Authentication authentication = AuthenticationService.getAuthentication((HttpServletRequest) request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);
 
-        /*
-        if (apiKey.equals(requestApiKey) && apiSecret.equals(requestApiSecret)) {
-            // Continue processing the request
-            filterChain.doFilter(request, response);
-        } else {
-            // Reject the request and send an unauthorized error
-            //response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-            response.getWriter().write("Unauthorized");
-        }
-
-         */
-
-
-        //filterChain.doFilter(request, response);
     }
 
 }
