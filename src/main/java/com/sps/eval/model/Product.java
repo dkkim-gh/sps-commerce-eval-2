@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class Product {
     private List<Product> subproducts;
 
 
-    private double price;
+    private BigDecimal price;
 
 
 }

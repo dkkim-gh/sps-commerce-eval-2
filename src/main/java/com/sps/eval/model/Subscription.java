@@ -1,11 +1,16 @@
 package com.sps.eval.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,21 +32,35 @@ public class Subscription {
     private double discount;
 
     @Transient
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
 
-        double totalPrice = 0.0;
+        Set<String> productNames = new HashSet();
+        BigDecimal totalPrice = new BigDecimal(0.0);
 
+        if(products.size()>0) {
 
-        if(products!=null && products.size()>0) {
-            totalPrice = products.stream().
-                    map(Product::getPrice).
-                    reduce(0.0, Double::sum);
+            for(Product p : products) {
+                for(Product subP : p.getSubproducts()) {
+
+                    if(!productNames.contains(subP.getName())) {
+                        productNames.add(subP.getName());
+                        totalPrice = totalPrice.add(subP.getPrice());
+                    }
+                }
+
+                if(!productNames.contains(p.getName())) {
+                    productNames.add(p.getName());
+                    totalPrice = totalPrice.add(p.getPrice());
+                }
+            }
         }
 
+        double discountFactor = (100-getDiscount())/100;
+        BigDecimal discountFactorBigDecimal = new BigDecimal(discountFactor);
 
-
+        totalPrice = totalPrice.multiply(discountFactorBigDecimal);
+        totalPrice = totalPrice.setScale(2, RoundingMode.HALF_EVEN);
         return totalPrice;
     }
-
 
 }
