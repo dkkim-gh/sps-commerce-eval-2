@@ -2,11 +2,17 @@ package com.sps.eval.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Entity(name = "location")
 public class Location {
 
