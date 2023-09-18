@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "08d1ab81-3e7a-4146-bb55-5f31b49fd966",
+		"name": "SPS Commerce Postman Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "633835"
+	},
+	"item": [
+		{
+			"name": "getOrgById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/organization/740b743d-d41d-4a90-9620-ea8ba34fff73",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"organization",
+						"740b743d-d41d-4a90-9620-ea8ba34fff73"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create org",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Org 1\",\r\n    \"location\": {\r\n        \"address\": \"address1\",\r\n        \"city\": \"city1\",\r\n        \"state\": \"state1\",\r\n        \"zipCode\": \"zipcode1\"\r\n    },\r\n    \"subscriptions\": [\r\n        {\r\n            \"products\": [\r\n                {\r\n                    \"name\": \"product 1\",\r\n                    \"description\": \"product 1\",\r\n                    \"subproducts\": [],\r\n                    \"price\": 10.0\r\n                },\r\n                {\r\n                    \"name\": \"product 2\",\r\n                    \"description\": \"product 2\",\r\n                    \"subproducts\": [],\r\n                    \"price\": 15.0\r\n                },\r\n                {\r\n                    \"name\": \"product 3\",\r\n                    \"description\": \"product 3\",\r\n                    \"subproducts\": [],\r\n                    \"price\": 19.99\r\n                },\r\n                {\r\n                    \"name\": \"product 4\",\r\n                    \"description\": \"product 4\",\r\n                    \"subproducts\": [],\r\n                    \"price\": 34.99\r\n                }\r\n            ],\r\n            \"discount\": 10.0\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/organization",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create org no subscriptions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Org 1\",\r\n    \"location\": {\r\n        \"address\": \"address1\",\r\n        \"city\": \"city1\",\r\n        \"state\": \"state1\",\r\n        \"zipCode\": \"zipcode1\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/organization",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/product/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"product 1\",\r\n    \"description\": \"product 1\",\r\n    \"subproducts\": [],\r\n    \"price\": 10.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Product with Subproducts",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"product 1\",\r\n    \"description\": \"product 1\",\r\n    \"subproducts\": [\r\n        {\r\n            \"name\": \"subproduct 1\",\r\n            \"description\": \"subproduct 1\",\r\n            \"subproducts\": [],\r\n            \"price\": 25.0\r\n        }\r\n    ],\r\n    \"price\": 10.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSubById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/subscription/c7f5be66-0533-442a-864b-21f17b5da224",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription",
+						"c7f5be66-0533-442a-864b-21f17b5da224"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create subscription",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "APIKEY",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"name\": \"product 1 (from subscription creation)\",\r\n            \"description\": \"product 1\",\r\n            \"subproducts\": [],\r\n            \"price\": 10.0\r\n        },\r\n        {\r\n            \"name\": \"product 2 (from subscription creation)\",\r\n            \"description\": \"product 2\",\r\n            \"subproducts\": [],\r\n            \"price\": 15.0\r\n        },\r\n        {\r\n            \"name\": \"product 3 (from subscription creation)\",\r\n            \"description\": \"product 3\",\r\n            \"subproducts\": [],\r\n            \"price\": 19.99\r\n        },\r\n        {\r\n            \"name\": \"product 4 (from subscription creation)\",\r\n            \"description\": \"product 4\",\r\n            \"subproducts\": [],\r\n            \"price\": 34.99\r\n        }\r\n    ],\r\n    \"discount\": \"50.0\",\r\n    \"organization\": {\r\n        \"id\": \"e09b801c-0d5b-443d-8f36-416709453318\",\r\n        \"name\": \"Org 1\",\r\n        \"location\": {\r\n            \"id\": \"c9bba341-4a1b-434b-beda-de6f06c8fa61\",\r\n            \"address\": \"address1\",\r\n            \"city\": \"city1\",\r\n            \"state\": \"state1\",\r\n            \"zipCode\": \"zipcode1\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/subscription",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create subscription with no products",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [],\r\n    \"discount\": \"50.0\",\r\n    \"organization\": {\r\n        \"id\": \"e09b801c-0d5b-443d-8f36-416709453318\",\r\n        \"name\": \"Org 1\",\r\n        \"location\": {\r\n            \"id\": \"c9bba341-4a1b-434b-beda-de6f06c8fa61\",\r\n            \"address\": \"address1\",\r\n            \"city\": \"city1\",\r\n            \"state\": \"state1\",\r\n            \"zipCode\": \"zipcode1\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/subscription",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get location",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/location/2e2194e2-d6e8-4a7a-b2ba-ea5ba8a6aa6e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"location",
+						"2e2194e2-d6e8-4a7a-b2ba-ea5ba8a6aa6e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all Locations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/location/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"location",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create location",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-Key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the X-API-Key header generated by Postman.",
+						"key": "X-API-KEY",
+						"value": "APIKEY",
+						"type": "text"
+					},
+					{
+						"key": "X-API-SECRET",
+						"value": "APISECRET",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"address1\",\r\n    \"city\": \"city1\",\r\n    \"state\": \"state1\",\r\n    \"zipCode\": \"zipcode1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/location",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"location"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "APIKEY",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-API-KEY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,9 +1,0 @@
-{
-  "name": "Org 1",
-  "location": {
-    "address": "address1",
-    "city": "city1",
-    "state": "state1",
-    "zipCode": "zipcode1"
-  }
-}

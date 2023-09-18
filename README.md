@@ -32,3 +32,7 @@ To make API calls, add a `X-API-KEY` header to requests with a value of: `APIKEY
 Both are configurable in `application.properties`.
 - `api.key.name=X-API-KEY`
 - `api.key.value=APIKEY`
+
+## Postman Collection
+If you want to use Postman, there is a Postman collection included 
+in the project root directory: `SPS Commerce Postman Collection.postman_collection.json`
