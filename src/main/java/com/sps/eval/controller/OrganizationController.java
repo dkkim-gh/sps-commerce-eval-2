@@ -28,7 +28,7 @@ public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
 
-    //@RateLimiter(name = "basic")
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get an Organization by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the Organization",
@@ -37,6 +37,8 @@ public class OrganizationController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Organization not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping("/{id}")
     public ResponseEntity<Organization> getOrganizationById(@PathVariable String id,
@@ -53,6 +55,7 @@ public class OrganizationController {
     }
 
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Save an Organization. Not including an ID will create a new Organization, including an ID will update.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Organization saved/updated",
@@ -61,6 +64,8 @@ public class OrganizationController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @PostMapping
     public ResponseEntity<Organization> saveOrganization(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
@@ -132,6 +137,7 @@ public class OrganizationController {
 
 
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get all Organizations (example of pagination and sorting)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returns all Organizations",
@@ -140,6 +146,8 @@ public class OrganizationController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam

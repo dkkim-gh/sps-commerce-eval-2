@@ -28,7 +28,7 @@ public class LocationController {
     @Autowired
     LocationService locationService;
 
-    //@RateLimiter(name = "basic")
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get a Location by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Return a Location by ID",
@@ -37,6 +37,8 @@ public class LocationController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Location not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping(value = "/{id}")
     public ResponseEntity<Location> findLocationById(@PathVariable String id,
@@ -51,6 +53,7 @@ public class LocationController {
     }
 
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Save an Location. Not including an ID will create a new Location, including an ID will update.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Location saved/updated",
@@ -59,6 +62,8 @@ public class LocationController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @SecurityRequirements()
     @PostMapping
@@ -83,6 +88,7 @@ public class LocationController {
     }
 
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get all Locations")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved all Locations",
@@ -91,6 +97,8 @@ public class LocationController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam

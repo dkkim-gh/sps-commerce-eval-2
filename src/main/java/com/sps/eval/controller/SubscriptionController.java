@@ -5,6 +5,7 @@ import com.sps.eval.model.Organization;
 import com.sps.eval.model.Product;
 import com.sps.eval.model.Subscription;
 import com.sps.eval.service.SubscriptionService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -32,6 +33,18 @@ public class SubscriptionController {
     @Autowired
     SubscriptionService subscriptionService;
 
+    @RateLimiter(name = "basic")
+    @Operation(summary = "Get a Subscription by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the Subscription",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Subscription.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Subscription not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = @Content)})
     @GetMapping("/{id}")
     public ResponseEntity<Subscription> getSubscriptionById(@PathVariable String id,
                                                             @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {
@@ -46,6 +59,7 @@ public class SubscriptionController {
     }
 
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Save an Subscription. Not including an ID will create a new Subscription, including an ID will update.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Organization saved/updated",
@@ -54,6 +68,8 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @SecurityRequirements()
     @PostMapping
@@ -81,6 +97,7 @@ public class SubscriptionController {
 
 
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get all Subscriptions")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved all Subscriptions",
@@ -89,6 +106,8 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
@@ -99,6 +118,18 @@ public class SubscriptionController {
     }
 
 
+    @RateLimiter(name = "basic")
+    @Operation(summary = "Upload a file to import Subscriptions")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully processed file to import Subscriptions",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Product.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = @Content) })
     @PostMapping(value = "/upload")
     public ResponseEntity<ResponseMessage> uploadSubscriptionCsvFile(@RequestParam("file") MultipartFile file,
                                                                      @RequestHeader(name = "X-API-KEY", required = false) String apiKey) {

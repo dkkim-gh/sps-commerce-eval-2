@@ -3,6 +3,7 @@ package com.sps.eval.controller;
 import com.sps.eval.model.Organization;
 import com.sps.eval.model.Product;
 import com.sps.eval.service.ProductService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -27,6 +28,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get an Product by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the Product",
@@ -35,6 +37,8 @@ public class ProductController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Organization not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable String id,
@@ -49,6 +53,7 @@ public class ProductController {
         }
     }
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Save an Product. Not including an ID will create a new Product, including an ID will update.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Organization saved/updated",
@@ -57,6 +62,8 @@ public class ProductController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @PostMapping
     public ResponseEntity<Product> saveProduct(@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
@@ -81,6 +88,7 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @RateLimiter(name = "basic")
     @Operation(summary = "Get all Products")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved all Products",
@@ -89,6 +97,8 @@ public class ProductController {
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Endpoint not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = @Content) })
     @GetMapping(value = "/all")
     @PageableAsQueryParam
